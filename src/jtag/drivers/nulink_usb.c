@@ -416,61 +416,6 @@ static int nulink_usb_trace_read(void *handle, uint8_t *buf, size_t *size)
 	return ERROR_OK;
 }
 
-static enum target_state nulink_usb_state(void *handle)
-{
-	int res;
-	struct nulink_usb_handle_s *h = handle;
-
-	if(!g_bOCDMode) {
-		nulink_mcu_reset(h, RESET_NONE2, CONNECT_ICP_MODE, EXTMODE_NORMAL);	// ICP Mode Exit
-		g_bICPMode = false;
-		nulink_mcu_reset(h, RESET_NONE_NULINK, CONNECT_NORMAL, EXTMODE_NORMAL);	//OCD Mode Entry
-		g_bOCDMode = true;
-	}
-
-	assert(handle != NULL);
-
-	//if (h->reconnect_pending) {
-	//	LOG_INFO("Previous state query failed, trying to reconnect");
-	//	res = nulink_usb_mode_enter(handle, nulink_get_mode(h->transport));
-
-	//	if (res != ERROR_OK)
-	//		return TARGET_UNKNOWN;
-
-	//	h->reconnect_pending = false;
-	//}
-
-	m_nulink_usb_api.nulink_usb_init_buffer(handle, 4 * 1);
-	/* set command ID */
-	h_u32_to_le(h->cmdbuf + h->cmdidx, CMD_CHECK_MCU_STOP);
-	h->cmdidx += 4;
-
-	res = m_nulink_usb_api.nulink_usb_xfer(handle, h->databuf, 4 * 3);
-
-	if (res != ERROR_OK)
-		return TARGET_UNKNOWN;
-
-	if (le_to_h_u32(h->databuf) == CMD_CHECK_MCU_STOP) {
-//		LOG_DEBUG("CMD_CHECK_MCU_STOP ok");
-	}
-
-	if (le_to_h_u32(h->databuf + 4 * 2) == 0) {
-//		LOG_DEBUG("NULINK  stop_pc(0x%04x)", le_to_h_u32(h->databuf + 4 * 1));
-		m_stop_pc = le_to_h_u32(h->databuf + 4);
-		//LOG_DEBUG("nulink_usb_state: m_stop_pc(0x%x)", m_stop_pc);
-		return TARGET_HALTED;
-	}
-	else
-	{
-//		LOG_DEBUG("running");
-		return TARGET_RUNNING;
-	}
-
-	//h->reconnect_pending = true;
-
-	return TARGET_UNKNOWN;
-}
-
 static int nulink_usb_reset(void *handle)
 {
 	int res;
@@ -569,7 +514,7 @@ static int nulink_usb_reset(void *handle)
 	return res;
 }
 
-int nulink_mcu_reset(void *handle, uint32_t reset_command, uint32_t connect_command, uint32_t extMode_command)
+static int nulink_mcu_reset(void *handle, uint32_t reset_command, uint32_t connect_command, uint32_t extMode_command)
 {
 	int res;
 	struct nulink_usb_handle_s *h = handle;
@@ -579,6 +524,61 @@ int nulink_mcu_reset(void *handle, uint32_t reset_command, uint32_t connect_comm
 	res = nulink_usb_reset(handle);
 
 	return res;
+}
+
+static enum target_state nulink_usb_state(void *handle)
+{
+	int res;
+	struct nulink_usb_handle_s *h = handle;
+
+	if(!g_bOCDMode) {
+		nulink_mcu_reset(h, RESET_NONE2, CONNECT_ICP_MODE, EXTMODE_NORMAL);	// ICP Mode Exit
+		g_bICPMode = false;
+		nulink_mcu_reset(h, RESET_NONE_NULINK, CONNECT_NORMAL, EXTMODE_NORMAL);	//OCD Mode Entry
+		g_bOCDMode = true;
+	}
+
+	assert(handle != NULL);
+
+	//if (h->reconnect_pending) {
+	//	LOG_INFO("Previous state query failed, trying to reconnect");
+	//	res = nulink_usb_mode_enter(handle, nulink_get_mode(h->transport));
+
+	//	if (res != ERROR_OK)
+	//		return TARGET_UNKNOWN;
+
+	//	h->reconnect_pending = false;
+	//}
+
+	m_nulink_usb_api.nulink_usb_init_buffer(handle, 4 * 1);
+	/* set command ID */
+	h_u32_to_le(h->cmdbuf + h->cmdidx, CMD_CHECK_MCU_STOP);
+	h->cmdidx += 4;
+
+	res = m_nulink_usb_api.nulink_usb_xfer(handle, h->databuf, 4 * 3);
+
+	if (res != ERROR_OK)
+		return TARGET_UNKNOWN;
+
+	if (le_to_h_u32(h->databuf) == CMD_CHECK_MCU_STOP) {
+//		LOG_DEBUG("CMD_CHECK_MCU_STOP ok");
+	}
+
+	if (le_to_h_u32(h->databuf + 4 * 2) == 0) {
+//		LOG_DEBUG("NULINK  stop_pc(0x%04x)", le_to_h_u32(h->databuf + 4 * 1));
+		m_stop_pc = le_to_h_u32(h->databuf + 4);
+		//LOG_DEBUG("nulink_usb_state: m_stop_pc(0x%x)", m_stop_pc);
+		return TARGET_HALTED;
+	}
+	else
+	{
+//		LOG_DEBUG("running");
+		return TARGET_RUNNING;
+	}
+
+	//h->reconnect_pending = true;
+
+	return TARGET_UNKNOWN;
 }
 
 int nulink_flash_init(void)
