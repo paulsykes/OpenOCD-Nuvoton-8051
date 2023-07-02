@@ -857,7 +857,7 @@ int nulink_read_flash(uint32_t addr, uint32_t len, uint8_t *buffer)
 	return res;
 }
 
-int nulink_set_flash_mode()
+int nulink_set_flash_mode(void)
 {
 	int res = ERROR_OK;
 	struct nulink_usb_handle_s *h = m_nulink_usb_handle;
