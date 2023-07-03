@@ -149,7 +149,8 @@
 //extern uint32_t g_uSFR_TKAddr;
 //extern uint32_t g_uSFR_TKSize;
 //extern uint32_t g_uXRAMSize;
-extern m_nulink_usb_handle;
+extern int nulink_usb_chip_erase(void);
+extern int m_nulink_usb_handle;
 bool g_bErase = false;
 bool g_bUpdateConfig = false;
 
