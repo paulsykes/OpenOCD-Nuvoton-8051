@@ -2503,7 +2503,8 @@ int numicro8051_read_memory(struct target *target, uint32_t address,
 	//LOG_DEBUG("numicro8051_read_memory address: 0x%x, size: 0x%x, count:0x%x", address, size, count);
 	int retval;
 	unsigned long uZone, uAddr, uAddr_valid, address_align, offset = 0;
-	struct numicro8051_common *numicro8051 = target_to_numicro8051(target);
+	//struct numicro8051_common *numicro8051 = target_to_numicro8051(target);
+	target_to_numicro8051(target);
 
 	uAddr_valid = (address & 0xFFFFFF) >> 16;
 	if (uAddr_valid == 0xFF) {
@@ -2871,7 +2872,8 @@ int numicro8051_write_memory(struct target *target, uint32_t address,
 	//LOG_DEBUG("numicro8051_write_memory");
 	int retval;
 	unsigned long uZone, uAddr, uAddr_valid, address_align, offset = 0;
-	struct numicro8051_common *numicro8051 = target_to_numicro8051(target);
+	//struct numicro8051_common *numicro8051 = target_to_numicro8051(target);
+	target_to_numicro8051(target);
 
 	uAddr_valid = (address & 0xFFFFFF) >> 16;
 	if (uAddr_valid == 0xFF) {
