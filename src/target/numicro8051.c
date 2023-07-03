@@ -2619,12 +2619,12 @@ int WriteData(struct target *target, uint32_t nAdr, uint32_t size, uint32_t coun
 			}
 			else
 			{
-				memset(buffer, 0x00, uLen_w);
+				memset((uint8_t*)buffer, 0x00, uLen_w);
 			}
 		}
 		else
 		{
-			memset(buffer, 0x00, uLen_w);
+			memset((uint8_t*)buffer, 0x00, uLen_w);
 		}
 
 		buffer	+= uLen_w;
