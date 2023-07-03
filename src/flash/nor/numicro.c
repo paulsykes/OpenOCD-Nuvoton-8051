@@ -169,18 +169,18 @@ struct numicro_cpu_type {
 };
 
 ///* If DataFlash size equals zero, it means the actual size depends on config settings. */
-//#define NUMICRO_BANKS_GENERAL(aprom_size, sprom_size, ldrom_size, config_size) \
-//	.n_banks = 4, \
-//	{{NUMICRO_APROM_BASE,  (aprom_size)}, \
-//	 {NUMICRO_SPROM_BASE,   (sprom_size)}, \
-//	 {NUMICRO_LDROM_BASE,  (ldrom_size)}, \
+//#define NUMICRO_BANKS_GENERAL(aprom_size, sprom_size, ldrom_size, config_size)
+//	.n_banks = 4,
+//	{{NUMICRO_APROM_BASE,  (aprom_size)},
+//	 {NUMICRO_SPROM_BASE,   (sprom_size)},
+//	 {NUMICRO_LDROM_BASE,  (ldrom_size)},
 //	 {NUMICRO_CONFIG_BASE, (config_size)}}
 //
-//#define NUMICRO_BANKS_OFFSET(aprom_size, sprom_size, ldrom_size, config_size) \
-//	.n_banks = 4, \
-//	{{NUMICRO_APROM_BASE,  (aprom_size)}, \
-//	 {NUMICRO_SPROM_BASE,   (sprom_size)}, \
-//	 {NUMICRO_LDROM_BASE,  (ldrom_size)}, \
+//#define NUMICRO_BANKS_OFFSET(aprom_size, sprom_size, ldrom_size, config_size)
+//	.n_banks = 4,
+//	{{NUMICRO_APROM_BASE,  (aprom_size)},
+//	 {NUMICRO_SPROM_BASE,   (sprom_size)},
+//	 {NUMICRO_LDROM_BASE,  (ldrom_size)},
 //	 {NUMICRO_CONFIG_BASE, (config_size)}}
 
 /* Get Flash Info by DID */
