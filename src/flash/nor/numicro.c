@@ -1073,7 +1073,10 @@ static int numicro_probe(struct flash_bank *bank)
 
 	numicro_info->probed = true;
 	g_bUpdateConfig = false;
+        #pragma GCC diagnostic push                             // save the actual diag context
+        #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"  // disable maybe warnings
 	numicro_info->cpu = cpu;
+        #pragma GCC diagnostic pop
 	LOG_DEBUG("Nuvoton NuMicro: Probed ...");
 
 	return ERROR_OK;
