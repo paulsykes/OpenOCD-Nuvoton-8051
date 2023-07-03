@@ -2644,7 +2644,8 @@ int WriteIdata(struct target *target, uint32_t nAdr, uint32_t size, uint32_t cou
 	uint32_t nSize = size * count;
 
 	unsigned long uAddr_d, uAddr_i;
-	unsigned long uLen_d = 0, uLen_i = 0, uLen_e = 0;
+	//unsigned long uLen_d = 0, uLen_i = 0, uLen_e = 0;
+	unsigned long uLen_d = 0, uLen_i = 0;
 
 	if (nAdr < 0x80)
 	{
@@ -2655,19 +2656,19 @@ int WriteIdata(struct target *target, uint32_t nAdr, uint32_t size, uint32_t cou
 		{
 			uLen_d	= 0x80 - nAdr;
 			uLen_i	= 0x80;
-			uLen_e	= (nAdr + nSize) - 0x100;
+			//uLen_e	= (nAdr + nSize) - 0x100;
 		}
 		else if ((nAdr + nSize) > 0x80)
 		{
 			uLen_d	= 0x80 - nAdr;
 			uLen_i	= (nAdr + nSize) - 0x80;
-			uLen_e	= 0;
+			//uLen_e	= 0;
 		}
 		else
 		{
 			uLen_d	= nSize;
 			uLen_i	= 0;
-			uLen_e	= 0;
+			//uLen_e	= 0;
 		}
 	}
 	else if (nAdr < 0x100)
@@ -2679,20 +2680,20 @@ int WriteIdata(struct target *target, uint32_t nAdr, uint32_t size, uint32_t cou
 		{
 			uLen_d	= 0;
 			uLen_i	= 0x100 - nAdr;
-			uLen_e	= (nAdr + nSize) - 0x100;
+			//uLen_e	= (nAdr + nSize) - 0x100;
 		}
 		else
 		{
 			uLen_d	= 0;
 			uLen_i	= nSize;
-			uLen_e	= 0;
+			//uLen_e	= 0;
 		}
 	}
 	else
 	{
 		uLen_d	= 0;
 		uLen_i	= 0;
-		uLen_e	= nSize;
+		//uLen_e	= nSize;
 	}
 
 	if (uLen_d)
