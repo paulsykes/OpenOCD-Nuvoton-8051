@@ -3124,15 +3124,15 @@ void numicro8051_deinit_target(struct target *target)
 //	{ DWT_CTRL, "dwt_ctrl", 32, },
 //	/* NOTE that Erratum 532314 (fixed r2p0) affects CYCCNT:  it wrongly
 //	 * increments while the core is asleep.
-//	 */
+//
 //	{ DWT_CYCCNT, "dwt_cyccnt", 32, },
-//	/* plus some 8 bit counters, useful for profiling with TPIU */
+//	/* plus some 8 bit counters, useful for profiling with TPIU
 //};
 //
 //static struct dwt_reg dwt_comp[] = {
-//#define DWT_COMPARATOR(i) \
-//		{ DWT_COMP0 + 0x10 * (i), "dwt_" #i "_comp", 32, }, \
-//		{ DWT_MASK0 + 0x10 * (i), "dwt_" #i "_mask", 4, }, \
+//#define DWT_COMPARATOR(i)
+//		{ DWT_COMP0 + 0x10 * (i), "dwt_" #i "_comp", 32, },
+//		{ DWT_MASK0 + 0x10 * (i), "dwt_" #i "_mask", 4, },
 //		{ DWT_FUNCTION0 + 0x10 * (i), "dwt_" #i "_function", 32, }
 //	DWT_COMPARATOR(0),
 //	DWT_COMPARATOR(1),
