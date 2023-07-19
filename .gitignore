@@ -57,6 +57,18 @@ doc/version.texi
 src/openocd
 src/openocd.exe
 
+# jimctl temp files
+jimtcl/_binary.c
+jimtcl/_glob.c
+jimtcl/_initjimsh.c
+jimtcl/_load-static-exts.c
+jimtcl/_nshelper.c
+jimtcl/_oo.c
+jimtcl/_stdlib.c
+jimtcl/_tclcompat.c
+jimtcl/_tree.c
+jimtcl/jimsh
+
 # configure/autotools output
 aclocal.m4
 autom4te.cache
